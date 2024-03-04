@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseCategoryController;
+use App\Http\Controllers\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,10 @@ Route::group(['prefix' => 'CourseCategory' , 'as' => 'CourseCategory.'] , functi
     Route::get('/edit/{CourseCategory}', [CourseCategoryController::class , 'edit'])->name('edit');
     Route::put('/edit/{CourseCategory}', [CourseCategoryController::class , 'update'])->name('update');
     Route::delete('/destroy/{CourseCategory}', [CourseCategoryController::class , 'destroy'])->name('destroy');
+});
+
+Route::group(['prefix' => 'Course', 'as' => 'Course.'], function() {
+    Route::get('/', [CourseController::class, 'index'])->name('index');
+    Route::get('/create', [CourseController::class, 'create'])->name('create');
+    Route::post('/create', [CourseController::class, 'store'])->name('store');
 });
