@@ -1,10 +1,14 @@
 <h1>Thêm khóa học</h1>
 
-<form action="{{ route('Course.store') }}" method="POST">
+<form action="{{ route('Course.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     tiêu đề
     <br>
     <input type="text" name="tieude_khoahoc">
+    <br>
+    Ảnh minh họa
+    <br>
+    <input type="file" name="anhminhhoa">
     <br>
     Mô tả
     <br>

@@ -16,6 +16,7 @@ class Courses extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('tieude_khoahoc', 255);
+            $table->string('anhminhhoa');
             $table->string('mota_khoahoc', 1000);
             $table->string('gia_khoahoc', 100);
             $table->string('tacgia_khoahoc', 100);

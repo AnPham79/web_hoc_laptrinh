@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -29,9 +30,9 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $data = new Course;
+        $filePath = $request->file('anhminhhoa')->store('imgCourse');
         $data->fill($request->except('_token'));
+        $data->anhminhhoa = $filePath;
         $data->save();
-
-        dd($request);
     }
 }

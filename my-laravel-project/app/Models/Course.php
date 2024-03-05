@@ -10,6 +10,6 @@ class Course extends Model
     use HasFactory;
 
     public $fillable = [
-        'tieude_khoahoc', 'mota_khoahoc', 'gia_khoahoc', 'tacgia_khoahoc', 'FK_ma_danhmuc'
+        'tieude_khoahoc', 'anhminhhoa', 'mota_khoahoc', 'gia_khoahoc', 'tacgia_khoahoc', 'FK_ma_danhmuc'
     ];
 }

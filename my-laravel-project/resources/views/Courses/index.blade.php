@@ -7,11 +7,9 @@
         <td>#</td>
         <td>Tên danh mục</td>
         <td>Mô tả</td>
+        <td>Ảnh</td>
         <td>Giá</td>
-        <td>Tác giả</td>
         <td>Danh mục</td>
-        <td>Ngày tạo</td>
-        <td>Ngày sửa</td>
         <td>Sửa</td>
         <td>Xóa</td>
     </tr>
@@ -19,12 +17,12 @@
         <tr>
             <td>{{ $each->id }}</td>
             <td>{{ $each->tieude_khoahoc }}</td>
+            <td>
+                <img src="{{ URL::asset('storage/app/imgCourse' . $each->anhminhhoa) }}" alt="Hình ảnh" height="200px" width="200px">
+            </td>
             <td>{{ $each->mota_khoahoc }}</td>
             <td>{{ $each->gia_khoahoc }}</td>
-            <td>{{ $each->tacgia_khoahoc }}</td>
             <td>{{ $each->FK_ma_danhmuc }}</td>
-            <td>{{ $each->created_at }}</td>
-            <td>{{ $each->updated_at }}</td>
             <td>Sửa</td>
             <td>Xóa</td>
         </tr>
