@@ -31,4 +31,7 @@ Route::group(['prefix' => 'Course', 'as' => 'Course.'], function() {
     Route::get('/', [CourseController::class, 'index'])->name('index');
     Route::get('/create', [CourseController::class, 'create'])->name('create');
     Route::post('/create', [CourseController::class, 'store'])->name('store');
+    Route::delete('/destroy/{Course}', [CourseController::class, 'destroy'])->name('destroy');
+    Route::get('/edit/{Course}', [CourseController::class , 'edit'])->name('edit');
+    Route::put('/edit/{Course}', [CourseController::class , 'update'])->name('update');
 });

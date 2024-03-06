@@ -18,13 +18,23 @@
             <td>{{ $each->id }}</td>
             <td>{{ $each->tieude_khoahoc }}</td>
             <td>
-                <img src="{{ URL::asset('storage/app/imgCourse' . $each->anhminhhoa) }}" alt="Hình ảnh" height="200px" width="200px">
+                <img src="{{ asset('../storage/app/' . $each->anhminhhoa) }}" alt="Hình ảnh" height="200px" width="200px">
             </td>
             <td>{{ $each->mota_khoahoc }}</td>
-            <td>{{ $each->gia_khoahoc }}</td>
-            <td>{{ $each->FK_ma_danhmuc }}</td>
-            <td>Sửa</td>
-            <td>Xóa</td>
+            <td>{{ $each->setNumberFormat() }} VND</td>
+            <td>{{ $each->CourseCategory->tendanhmuc_khoahoc }}</td>
+            <td>
+                <a href="{{ route('Course.edit', ['Course' => $each->id]) }}">
+                    Sửa
+                </a>
+            </td>
+            <td>
+                <form action="{{ route('Course.destroy', ['Course' => $each->id]) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button>Xóa</button>
+                </form>
+            </td>
         </tr>
     @endforeach
 </table>
