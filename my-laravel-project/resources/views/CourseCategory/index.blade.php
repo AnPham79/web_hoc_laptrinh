@@ -2,6 +2,20 @@
 
 <a href="{{ route('CourseCategory.create') }}">Thêm danh mục khóa học tại đây</a>
 
+<br>
+    Xin chào nhân viên: {{ session()->get('ten_hocvien')}}
+    <a href="{{ route('logout') }}">
+        Đăng xuất
+    </a>
+<br>
+
+@if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+
 <table border="1" width="100%">
     <tr>
         <td>#</td>
