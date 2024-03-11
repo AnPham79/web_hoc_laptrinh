@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CourseRequest;
 
 class CourseController extends Controller
 {
@@ -29,7 +30,7 @@ class CourseController extends Controller
         return redirect()->route('Course.index');
     }
 
-    public function store(Request $request)
+    public function store(CourseRequest $request)
     {
         $data = new Course;
         $filePath = $request->file('anhminhhoa')->store('img');

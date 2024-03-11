@@ -1,4 +1,10 @@
 <h1>Đây là trang quản lí khóa học</h1>
+<br>
+    Xin chào nhân viên: {{ session()->get('ten_hocvien')}}
+    <a href="{{ route('logout') }}">
+        Đăng xuất
+    </a>
+<br>
 
 <a href="{{ route('Course.create') }}">Thêm khóa học tại đây</a>
 

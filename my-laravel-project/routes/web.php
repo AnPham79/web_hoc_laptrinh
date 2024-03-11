@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\checkLoginMiddleware;
 use App\Http\Middleware\checkSuperAdminMiddleware;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +18,17 @@ use App\Http\Middleware\checkSuperAdminMiddleware;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/show/{id}', [HomeController::class, 'show'])->name('show');
+Route::get('/order/{id}', [HomeController::class, 'order'])->name('order');
+Route::put('/pay/{id}', [HomeController::class, 'pay'])->name('pay');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'process_login'])->name('process_login');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'process_register'])->name('process_register');
+
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => checkLoginMiddleware::class], function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
