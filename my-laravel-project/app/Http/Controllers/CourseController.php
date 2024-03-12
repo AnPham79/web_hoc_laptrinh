@@ -37,6 +37,8 @@ class CourseController extends Controller
         $data->fill($request->except('_token'));
         $data->anhminhhoa = $filePath;
         $data->save();
+
+        return redirect()->route('Course.index');
     }
 
     public function destroy(Request $request, Course $Course)

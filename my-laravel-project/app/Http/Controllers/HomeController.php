@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\User;
+use App\Models\Lesson;
+use App\Models\CourseUser;
+use App\Models\Comment;
 use Illuminate\Pagination\Paginator;
 
 class HomeController extends Controller
@@ -20,9 +23,23 @@ class HomeController extends Controller
 
         $data->appends(['q' => $search]);
 
+        $courseUserOwn = [];
+
+        if (session()->has('id')) {
+
+            $userId = session()->get('id');
+
+            $courseUser = CourseUser::where('FK_ma_nguoidung', $userId)->pluck('FK_ma_khoahoc');
+
+            $courseUserOwn = Course::query()
+                ->whereIn('id', $courseUser)
+                ->get();
+        }
+
         return view('index', [
             'data' => $data,
-            'search' => $search
+            'search' => $search,
+            'courseUserOwn' => $courseUserOwn
         ]);
     }
 
@@ -30,8 +47,38 @@ class HomeController extends Controller
     {
         $data = Course::find($id);
 
-        return view('show', [
-            'data' => $data,
+        $lessons = Lesson::where('FK_ma_khoahoc', $id)->get();
+
+        if (session()->has('id')) {
+            $userId = session()->get('id');
+
+            $courseUser = CourseUser::where('FK_ma_nguoidung', $userId)
+                ->where('FK_ma_khoahoc', $id)
+                ->first();
+
+            if ($courseUser) {
+                return view('show', [
+                    'data' => $data,
+                    'lessons' => $lessons,
+                    'courseUser' => $courseUser
+                ]);
+            } else {
+                return view('show', [
+                    'data' => $data,
+                    'courseUser' => $courseUser
+                ]);
+            }
+        } else {
+            return 'Đăng nhập để được biết thêm chi tiết nhé <3';
+        }
+    }
+
+    public function showLesson($id)
+    {
+        $lessonDetail = Lesson::find($id);
+
+        return view('showLesson', [
+            'lessonDetail' => $lessonDetail,
         ]);
     }
 
@@ -73,6 +120,28 @@ class HomeController extends Controller
         $user->sodutaikhoan = $newBalance;
         $user->save();
 
+        $courseUser = CourseUser::updateOrCreate(
+            ['FK_ma_nguoidung' => $userId],
+            ['FK_ma_khoahoc' => $id]
+        );
+
         return redirect()->route('index')->with('success', 'Thanh toán thành công');
+    }
+
+    public function comment($id)
+    {
+        if (!session()->get('quyen')) {
+            return redirect()->route('login');
+        }
+
+        $userId = session()->get('id');
+
+        $courseUser = Comment::create([
+            'noidung_binhluan' => request()->input('noidung_binhluan'),
+            'FK_ma_nguoidung' => $userId,
+            'FK_ma_khoahoc' => $id,
+        ]);
+
+        return redirect()->route('show', ['id' => $id]);
     }
 }

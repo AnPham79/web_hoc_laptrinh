@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Middleware\checkLoginMiddleware;
 use App\Http\Middleware\checkSuperAdminMiddleware;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LessonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,10 @@ use App\Http\Controllers\HomeController;
 */
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/show/{id}', [HomeController::class, 'show'])->name('show');
+Route::get('/showLesson/{id}', [HomeController::class, 'showLesson'])->name('showLesson');
 Route::get('/order/{id}', [HomeController::class, 'order'])->name('order');
 Route::put('/pay/{id}', [HomeController::class, 'pay'])->name('pay');
+Route::post('/comment/{id}', [HomeController::class, 'comment'])->name('comment');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'process_login'])->name('process_login');
@@ -39,6 +42,17 @@ Route::group(['middleware' => checkLoginMiddleware::class], function () {
         Route::get('/edit/{CourseCategory}', [CourseCategoryController::class, 'edit'])->name('edit');
         Route::put('/edit/{CourseCategory}', [CourseCategoryController::class, 'update'])->name('update');
         Route::delete('/destroy/{CourseCategory}', [CourseCategoryController::class, 'destroy'])
+            ->name('destroy')
+            ->middleware(checkSuperAdminMiddleware::class);
+    });
+
+    Route::group(['prefix' => 'Lesson', 'as' => 'Lesson.'], function () {
+        Route::get('/', [LessonController::class, 'index'])->name('index');
+        Route::get('/create', [LessonController::class, 'create'])->name('create');
+        Route::post('/create', [LessonController::class, 'store'])->name('store');
+        Route::get('/edit/{Lesson}', [LessonController::class, 'edit'])->name('edit');
+        Route::put('/edit/{Lesson}', [LessonController::class, 'update'])->name('update');
+        Route::delete('/destroy/{Lesson}', [LessonController::class, 'destroy'])
             ->name('destroy')
             ->middleware(checkSuperAdminMiddleware::class);
     });
