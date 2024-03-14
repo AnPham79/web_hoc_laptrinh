@@ -21,7 +21,7 @@
                 </li>
             </ul>
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" value="">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             @if (session()->get('ten_hocvien'))
@@ -32,7 +32,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a></li>
-                        <li><a class="dropdown-item" href="#">Số dư: 100000 VND</a></li>
+                        <li><a class="dropdown-item" href="#">Số dư: {{ session()->get('sodutaikhoan') }} VND</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

@@ -19,7 +19,7 @@ class HomeController extends Controller
         Paginator::useBootstrap();
         $data = Course::query()
             ->where('tieude_khoahoc', 'like', '%' . $search . '%')
-            ->paginate(2);
+            ->paginate(8);
 
         $data->appends(['q' => $search]);
 
@@ -47,6 +47,11 @@ class HomeController extends Controller
     {
         $data = Course::find($id);
 
+        $cmt = Comment::query()
+        ->where('FK_ma_khoahoc', $id)
+        ->with('NameUserInComment')
+        ->get();
+
         $lessons = Lesson::where('FK_ma_khoahoc', $id)->get();
 
         if (session()->has('id')) {
@@ -59,17 +64,19 @@ class HomeController extends Controller
             if ($courseUser) {
                 return view('show', [
                     'data' => $data,
+                    'cmt' => $cmt,
                     'lessons' => $lessons,
                     'courseUser' => $courseUser
                 ]);
             } else {
                 return view('show', [
                     'data' => $data,
+                    'cmt' => $cmt,
                     'courseUser' => $courseUser
                 ]);
             }
         } else {
-            return 'Đăng nhập để được biết thêm chi tiết nhé <3';
+            return redirect()->route('login');
         }
     }
 
@@ -120,10 +127,10 @@ class HomeController extends Controller
         $user->sodutaikhoan = $newBalance;
         $user->save();
 
-        $courseUser = CourseUser::updateOrCreate(
-            ['FK_ma_nguoidung' => $userId],
-            ['FK_ma_khoahoc' => $id]
-        );
+        $courseUser = CourseUser::create([
+            'FK_ma_nguoidung' => $userId,
+            'FK_ma_khoahoc' => $id
+        ]);        
 
         return redirect()->route('index')->with('success', 'Thanh toán thành công');
     }

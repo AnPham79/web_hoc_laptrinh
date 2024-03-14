@@ -59,7 +59,8 @@
                                         <a href="{{ route('show', ['id' => $each->id]) }}">Xem khóa học</a>
                                     </div>
                                 </div>
-                                <span><a href="{{ route('show', ['id' => $each->id]) }}" class="text-decoration-none my-2">
+                                <span class="title-course my-3"><a href="{{ route('show', ['id' => $each->id]) }}"
+                                        class="text-decoration-none">
                                         {{ $each->tieude_khoahoc }}
                                     </a></span>
                                 <p>Chuyên đề: <b>{{ $each->CourseCategory->tendanhmuc_khoahoc }}</b></p>
@@ -69,7 +70,7 @@
                 </div>
             @else
                 <div class="undefine-course d-flex justify-content-center align-items-center">
-                    <img src="./img/chuamuckhoahoc.png" alt="">
+                    <img src="{{ asset('img/chuamuckhoahoc.png') }}" alt="">
                     <p>ui, bạn chưa mua khóa học nào >.< </p>
                 </div>
             @endif
@@ -86,7 +87,8 @@
                                     <a href="{{ route('show', ['id' => $each->id]) }}">Xem khóa học</a>
                                 </div>
                             </div>
-                            <span><a href="{{ route('show', ['id' => $each->id]) }}">
+                            <span class="my-3"><a href="{{ route('show', ['id' => $each->id]) }}"
+                                    class="text-decoration-none">
                                     {{ $each->tieude_khoahoc }}
                                 </a></span>
                             <p>Chuyên đề: <b>{{ $each->CourseCategory->tendanhmuc_khoahoc }}</b></p>
@@ -94,6 +96,7 @@
                     </div>
                 @endforeach
             </div>
+            <br>
             {{ $data->links() }}
         </div>
     </div>
